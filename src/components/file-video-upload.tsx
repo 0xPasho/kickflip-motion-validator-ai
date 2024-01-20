@@ -202,6 +202,11 @@ const FileVideoUpload: React.FC = () => {
           </form>
         </div>
       </CardContent>
+      {isLoading && (
+        <div className="text-center w-full">
+          Please wait! Video is being processed....
+        </div>
+      )}
       {!!videoResponse && (
         <div>
           <h1 className="text-lg font-bold">Response from the video</h1>
