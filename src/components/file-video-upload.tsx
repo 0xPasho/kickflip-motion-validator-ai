@@ -66,6 +66,7 @@ const FileVideoUpload: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [openAiKey, setOpenAiKey] = useState("");
   const [videoResponse, setVideoResponse] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [previewType, setPreviewType] = useState<PreviewType>();
   async function extractFramesFromVideo(videoFile: File): Promise<string[]> {
     return new Promise((resolve, reject) => {
@@ -137,8 +138,9 @@ const FileVideoUpload: React.FC = () => {
     if (!openAiKey) {
       alert("Add your OpenAi key first 😡");
     }
+    setIsLoading(true);
     const videoName = `kick-${previewType}.mp4`;
-    const video = `${process.env.VERCEL_URL}/${videoName}`;
+    const video = `${process.env.NEXT_PUBLIC_VERCEL_URL}/${videoName}`;
     if (file) {
       await handleVideoUpload(file);
     } else if (previewType) {
@@ -149,6 +151,7 @@ const FileVideoUpload: React.FC = () => {
     } else {
       console.log("No file selected");
     }
+    setIsLoading(false);
   }
 
   function onFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -181,7 +184,7 @@ const FileVideoUpload: React.FC = () => {
               />
               <Button
                 type="submit"
-                disabled={!file && !previewType}
+                disabled={(!file && !previewType) || isLoading}
                 className="mt-2 w-full"
               >
                 Upload
@@ -199,7 +202,12 @@ const FileVideoUpload: React.FC = () => {
           </form>
         </div>
       </CardContent>
-      <span className="text-md">{videoResponse}</span>
+      {!!videoResponse && (
+        <div>
+          <h1 className="text-lg font-bold">Response from the video</h1>
+          <span className="text-md px-4">{videoResponse}</span>
+        </div>
+      )}
     </>
   );
 };
