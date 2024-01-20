@@ -7,6 +7,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import FileVideoUpload from "./file-video-upload";
+import Link from "next/link";
 
 export default function PageContent() {
   return (
@@ -21,9 +22,11 @@ export default function PageContent() {
             </CardDescription>
           </CardHeader>
           <FileVideoUpload />
-          <Button className="mb-6">
-            <GitHubLogoIcon className="mr-2" /> Github
-          </Button>
+          <Link href="https://github.com/0xPasho/learn-kickflip-ai">
+            <Button className="mb-6">
+              <GitHubLogoIcon className="mr-2" /> Github
+            </Button>
+          </Link>
         </Card>
       </main>
     </div>
